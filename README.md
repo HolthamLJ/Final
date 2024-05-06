@@ -1,1 +1,6 @@
-# Final
+# Final lab
+This is my final project for web mapping. It is a trail map that takes youy through some of Americas most famous cities such as Boston, New York city, Philadelphia, Washington D.C as well as Shenendoah national park. 
+# Challenges
+This map was came with many different challenges. For starters, maps to gpx hasnt been working no matter what kind of path way i use; long or short. To circumnavigate this challenge, i ended up using gps visualizer which is a website that allows the user to draw a pathway and then download the data into a gpx file. This proved to work well, but after following my original project proposal plan of creating a route around the United States and working 10 hours on a pathway, all of my data did not save after my computer died. Frustrated, i decided to cut the pathway short on the second go around and focus on Boston to Boone because that route has real signifi=gance in my life as i take it almost every year. Furthermore i had a very hard time creating popups that worked woith the webpages and including all relevant information in a space that was contained within the web map. FInally, as i created the code to add images to the map like i have done before, none of my images seemed to want tobe included in my map. 
+# summary 
+This was a very frustrating challenge and I hope to never have to code for a grade ever again. 
