@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset=utf-8 />
+	<title> Boston to Boone</title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background: "whitesmoke";
+			font-family: "Noto Sans", sans-serif;
+			color: #3d3d3d;
+		}
+
+		h1 {
+			position: absolute;
+			margin-top: 0;
+			top: 10px;
+			left: 45px;
+			font-size: 2em;
+			font-family: "Lora", serif;
+			letter-spacing: .04em;
+			padding: 10px 15px;
+			background: rgba(256, 256, 256);
+			border: 1px solid grey;
+			border-radius: 3px;
+			z-index: 800;
+		}
+
+		h2 {
+			font-family: "Lora", serif;
+			letter-spacing: .04em;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
+
+		section {
+			position: absolute;
+			bottom: 0;
+			left: 10px;
+			width: 300px;
+			margin: 20px auto;
+			padding: 0 15px;
+			background: rgba(256, 256, 256);
+			border: 1px solid grey;
+			border-radius: 3px;
+			z-index: 800;
+		}
+
+		p {
+			font-size: .9em;
+			line-height: 1.5em;
+		}
+
+		a {
+			color: #005daa;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>From Boston to Boone, a trip through some of America's most famous cities</h1>
+
+	<div id='map'></div>
+
+	<section>
+		<h2> East Coast Cruisin'</h2>
+
+		<p>This map is inspired by my yearly family migration up to Boston, Ma and was created as a travel itinerary and map through some of America's most famous cities.</p>
+
+		<p> Thanks to a website called NomadCatt, this map was created with the perspective of the website author in mind. This is map was made with his itinerary in mind and through further exploration on his blog, you are able to find exactly what to do in each city. 
+		</p>
+
+		<p>Check out his website at <a href="https://www.nomadicmatt.com/travel-blogs/united-states-road-trip-itinerary/#:~:text=The%20Great%20American%20Road%20Trip%20—%20it's%20the%20kind%20of%20multimonth,end%20up%20heading%20abroad%20instead.">NomadCatt.com</a></p>
+		<p>Map Authored bby Liam Holtham</p>
+
+	</section>
+
+	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <script src="data/route.js"></script>
+
+	<script>
+
+
+		var options = {
+			center: [37.08403, -81.83015],
+			zoom: 12
+		}
+
+
+		var map = L.map('map', options);
+
+
+var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+}).addTo(map);
+
+
+
+var myRoute = L.geoJSON(data, {
+  filter: function(feature) {
+    if(feature.geometry.type == "LineString") {
+      return feature;
+    }
+  },
+
+  style: function(feature) {
+
+    return {
+      color: "#FF0000",
+      weight: 10,
+      opacity: 0.8,
+      dashArray: "10,10"
+    }
+  }
+}).addTo(map);
+
+var myStops = L.geoJSON(data, {
+  filter: function(feature) {
+    if(feature.geometry.type == "Point") {
+      return feature;
+    }
+  },
+  onEachFeature: function(feature, layer) {
+    layer.bindTooltip(feature.properties['Name']+"<p>"+feature.properties['Description ']+"</p>"+"<p>"+feature.properties['Itinerary']+"</p>"+"<p>"+"<img src='"+feature.properties['image']+"' width='200px' height='200px'/>");
+  },
+  
+
+  
+}).addTo(map);
+
+map.fitBounds(myRoute.getBounds());
+
+
+	</script>
+
+</body>
+
+</html>
